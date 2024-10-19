@@ -12,6 +12,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Fade from '@mui/material/Fade';
+
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -39,7 +40,7 @@ export default function Login() {
         try {
             const result = await login({ email, password }).unwrap();
             dispatch(setAccessToken({
-                accessToken: result.access_token, 
+                accessToken: result.access_token,
                 useInfo: result.useInfo
             }));
 
@@ -55,17 +56,37 @@ export default function Login() {
             noValidate
             autoComplete="off"
         >
-            <div>
+            <>
                 <Accordion
                     expanded={expanded}
                     onChange={handleExpansion}
                     slots={{ transition: Fade }}
                     slotProps={{ transition: { timeout: 400 } }}
-                    sx={{
-                        backgroundColor: 'transparent',
-                        boxShadow: 'none', 
-                        border: 'none', 
-                    }}
+                    sx={[
+                        expanded
+                            ? {
+                                '& .MuiAccordion-region': {
+                                    height: 'auto',
+                                },
+                                '& .MuiAccordionDetails-root': {
+                                    display: 'block',
+                                },
+                                backgroundColor: 'transparent',
+                                boxShadow: 'none',
+                                border: 'none',
+                            }
+                            : {
+                                '& .MuiAccordion-region': {
+                                    height: 0,
+                                },
+                                '& .MuiAccordionDetails-root': {
+                                    display: 'none',
+                                },
+                                backgroundColor: 'transparent',
+                                boxShadow: 'none',
+                                border: 'none',
+                            },
+                    ]}
                 >
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -112,7 +133,7 @@ export default function Login() {
                         {error && <Typography color="error">Error: {error.toString()}</Typography>}
                     </AccordionDetails>
                 </Accordion>
-            </div>
+            </>
         </Box>
     );
 }

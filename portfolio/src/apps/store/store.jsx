@@ -14,12 +14,17 @@ export const store = configureStore({
         [authApi.reducerPath]: authApi.reducer,
         [weatherApi.reducerPath]: weatherApi.reducer,
         [profileApi.reducerPath]: profileApi.reducer,
-        [blogApi.reducerPath]: profileApi.reducer,
+        [blogApi.reducerPath]: blogApi.reducer,
         loading: loadingReducer,
         auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(blogApi.middleware).concat(profileApi.middleware).concat(infosApi.middleware).concat(weatherApi.middleware).concat(authApi.middleware),
+        getDefaultMiddleware()
+            .concat(authApi.middleware)
+            .concat(blogApi.middleware)
+            .concat(profileApi.middleware)
+            .concat(infosApi.middleware)
+            .concat(weatherApi.middleware),
 });
 
 

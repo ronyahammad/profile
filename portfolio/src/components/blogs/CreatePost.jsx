@@ -52,14 +52,7 @@ export default function Blogs() {
                         multiline
                         variant="standard"
                     />
-                    {/*                     <label htmlFor="title">Title</label>
-                    <input
-                        type="text"
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="Enter blog title"
-                    /> */}
+                    
                 </Typography>
                 <Typography variant="h5" gutterBottom>
                     Blog Content</Typography>
@@ -71,9 +64,7 @@ export default function Blogs() {
                         placeholder="Enter your blog content"
                     />
                 </Typography>
-                {/* <button type="submit" disabled={isLoading}>
-                    {isLoading ? 'Creating...' : 'Create Blog'}
-                </button> */}
+                
                 <Typography gutterBottom>
                     <Button variant="outlined" type="submit" disabled={isLoading} endIcon={<SendIcon />}>
                         {isLoading ? 'Creating...' : 'Create Blog'}

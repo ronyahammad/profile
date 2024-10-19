@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+// Define the blog API slice
 export const blogApi = createApi({
     reducerPath: 'blogApi',
     baseQuery: fetchBaseQuery({
@@ -12,7 +13,7 @@ export const blogApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['Blog', 'Users'],
+    tagTypes: ['Blog', 'User'],
     endpoints: (builder) => ({
         // Create a new blog post
         createBlog: builder.mutation({
@@ -27,6 +28,10 @@ export const blogApi = createApi({
         // Get blog post details by ID
         getDetailBlog: builder.query({
             query: (id) => `/post/${id}`,
+            transformResponse: (response) => ({
+                ...response.post,
+                creatorName: response.post.creator.name || 'Anonymous',
+            }),
             providesTags: ['Blog'],
         }),
 
@@ -43,18 +48,24 @@ export const blogApi = createApi({
         // Get blog posts created by the authenticated user
         getBlogByUser: builder.query({
             query: () => '/post',
-            providesTags: ['Blog'],
+            transformResponse: (response) =>
+                response.posts.map((post) => ({
+                    title: post.title,
+                    content: post.content,
+                    creatorName: post.creator.name || 'Anonymous',
+                })),
+            providesTags: ['User'],
         }),
 
         // Get all blog posts (public)
         getBlogList: builder.query({
             query: () => '/postlists',
-            providesTags: ['Blog'],
-        }),
-
-
-        getBlogById: builder.query({
-            query: (id) => `/post/${id}`,
+            transformResponse: (response) =>
+                response.posts.map((post) => ({
+                    title: post.title,
+                    content: post.content,
+                    creatorName: post.creator.name || 'Anonymous',
+                })),
             providesTags: ['Blog'],
         }),
 
@@ -75,6 +86,5 @@ export const {
     useUpdateBlogMutation,
     useGetBlogByUserQuery,
     useGetBlogListQuery,
-    useGetBlogByIdQuery,
-    useDeleteBlogMutation
+    useDeleteBlogMutation,
 } = blogApi;

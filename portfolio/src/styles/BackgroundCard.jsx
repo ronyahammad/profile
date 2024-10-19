@@ -42,7 +42,7 @@ export default function BackgroundCard({ isImage, pos, width, height, filterTag 
         };
     }, [index, isImage, data, isLoading]);
 
-    // Handle undefined data or loading state properly
+    
     const filteredData = data && filterTag
         ? data.filter((info) => info.tags.includes(filterTag))
         : [];
